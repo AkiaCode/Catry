@@ -1,0 +1,11 @@
+BRANCH: 2
+  laks: =D
+  CHOICE: Kill Laks | Live Laks
+  PLAYER: 1
+  GOTO: 2
+
+BRANCH: 1
+  laks: Do you like me?
+  CHOICE: Yes | No | Kill Laks | Do nothing
+  PLAYER: 1
+  GOTO: 2
