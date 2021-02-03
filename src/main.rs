@@ -1,3 +1,4 @@
+use catry::terminal_clear;
 use std::{fs, process::Command, thread, time};
 use catry::{Token, find_branch, find_line};
 
@@ -93,12 +94,7 @@ SOFTWARE.
     thread::sleep(time::Duration::from_millis(2000));
     println!("Now, It's time to start!");
     thread::sleep(time::Duration::from_millis(2000));
-    Command::new("cmd")
-        .args(&["/c", "cls"])
-        .spawn()
-        .expect("cls command failed to start")
-        .wait()
-        .expect("failed to wait");
+    terminal_clear();
     // Find BRANCH(또는 가지): 1
     let mut d = find_branch(find_line(tokens.iter(), 1), tokens.iter(), 1);
     // 단순 기록용
@@ -129,12 +125,7 @@ loop {
                     Err(_) => {
                             eprintln!("위험해요...\n1~{}까지만 있지만...\n1번으로 이동시킬게욧...!\n다음에는 이러지 말아요..!", choice.len()-1);
                             thread::sleep(time::Duration::from_millis(1500));
-                            Command::new("cmd")
-                                .args(&["/c", "cls"])
-                                .spawn()
-                                .expect("cls command failed to start")
-                                .wait()
-                                .expect("failed to wait");
+                            terminal_clear();
                         1
                     }
                 };
@@ -142,23 +133,13 @@ loop {
                 if number > choice.len()-1 || choice[number].is_empty() || number == 0 {
                     eprintln!("위험해요...\n1~{}까지만 있지만...\n1번으로 이동시킬게욧...!\n다음에는 이러지 말아요..!", choice.len()-1);
                     thread::sleep(time::Duration::from_millis(1500));
-                    Command::new("cmd")
-                        .args(&["/c", "cls"])
-                        .spawn()
-                        .expect("cls command failed to start")
-                        .wait()
-                        .expect("failed to wait");
+                    terminal_clear();
                     number = 1;
                 }
                 if d[i+2*number-1].value[0].is_empty() {
                     eprintln!("위험해요...\n1~{}까지만 있지만...\n1번으로 이동시킬게욧...!\n다음에는 이러지 말아요..!", choice.len()-1);
                     thread::sleep(time::Duration::from_millis(1500));
-                    Command::new("cmd")
-                        .args(&["/c", "cls"])
-                        .spawn()
-                        .expect("cls command failed to start")
-                        .wait()
-                        .expect("failed to wait");
+                    terminal_clear();
                     choice_number = 1;
                 } else {
                     choice_number = d[i+2*number-1].value[0].parse::<usize>().unwrap_or(1);
@@ -166,12 +147,7 @@ loop {
                 player = number;
                 //println!("You> {}", choice[number]);
                 thread::sleep(time::Duration::from_millis(2000));
-                Command::new("cmd")
-                    .args(&["/c", "cls"])
-                    .spawn()
-                    .expect("cls command failed to start")
-                    .wait()
-                    .expect("failed to wait");
+                terminal_clear();
             }, 
             a => {
                 if pop.keyword == "PLAYER" || pop.keyword == "가라" && player.to_string() == pop.value[0] {
