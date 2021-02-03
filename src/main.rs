@@ -61,12 +61,7 @@ fn main() {
         return eprintln!("RuntimeError: 'BRANCH(또는 가지): 1'(을)를 찾을 수 없습니다");
     }
 
-    Command::new("cmd")
-        .args(&["/c", "cls"])
-        .spawn()
-        .expect("cls command failed to start")
-        .wait()
-        .expect("failed to wait");
+    terminal_clear();
     print!(r#"
 Welcome to Catry Story Book (CSB)!
 
