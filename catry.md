@@ -4,7 +4,6 @@
 ```
 BRANCH
 CHOICE
-PLAYER
 GOTO
 etc...
 ```
