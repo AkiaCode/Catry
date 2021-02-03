@@ -150,7 +150,19 @@ loop {
                         .expect("failed to wait");
                     number = 1;
                 }
-                choice_number = d[i+2*number].value[0].parse::<usize>().unwrap_or(1);
+                if d[i+2*number-1].value[0].is_empty() {
+                    eprintln!("위험해요...\n1~{}까지만 있지만...\n1번으로 이동시킬게욧...!\n다음에는 이러지 말아요..!", choice.len()-1);
+                    thread::sleep(time::Duration::from_millis(1500));
+                    Command::new("cmd")
+                        .args(&["/c", "cls"])
+                        .spawn()
+                        .expect("cls command failed to start")
+                        .wait()
+                        .expect("failed to wait");
+                    choice_number = 1;
+                } else {
+                    choice_number = d[i+2*number-1].value[0].parse::<usize>().unwrap_or(1);
+                }
                 player = number;
                 //println!("You> {}", choice[number]);
                 thread::sleep(time::Duration::from_millis(2000));
@@ -173,12 +185,14 @@ loop {
                 }
                 if a == "BRANCH" || a == "GOTO" || a == "PLAYER" || a == "플레이어" || a == "가라" || a == "가지" {
                     continue; 
-                } else { 
+                } else {
                     println!("{}: {}", pop.keyword, pop.value[0]);
                     thread::sleep(time::Duration::from_millis(1000));
+                    d.remove(i);
                 }
             }
         }
     }
+    if d.len() == 1 { d.clear(); break; }
 }
 }
