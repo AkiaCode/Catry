@@ -1,5 +1,5 @@
 use catry::terminal_clear;
-use std::{fs, process::Command, thread, time};
+use std::{fs, thread, time};
 use catry::{Token, find_branch, find_line};
 
 fn main() {
@@ -23,13 +23,6 @@ fn main() {
                 "GOTO" | "가라" => {
                     if tokens.iter().any(|e| e.keyword == "BRANCH" || e.keyword == "가지") {
                         tokens.push(Token::new(String::from("GOTO"), vec![String::from(word)], num, i.chars().count()));
-                    } else {
-                        return eprintln!("TokenParserError: 'BRANCH' 또는 '가지' 키워드 없이 '{}'(을)를 사용할 수 없습니다\n\tLine: {}:{}", keyword, num, i.chars().count());
-                    }
-                },
-                "PLAYER" | "플레이어" => {
-                    if tokens.iter().any(|e| e.keyword == "BRANCH" || e.keyword == "가지") {
-                        tokens.push(Token::new(String::from("PLAYER"),vec![String::from(word)], num, i.chars().count()))
                     } else {
                         return eprintln!("TokenParserError: 'BRANCH' 또는 '가지' 키워드 없이 '{}'(을)를 사용할 수 없습니다\n\tLine: {}:{}", keyword, num, i.chars().count());
                     }
@@ -131,21 +124,14 @@ loop {
                     terminal_clear();
                     number = 1;
                 }
-                if d[i+2*number-1].value[0].is_empty() {
-                    eprintln!("위험해요...\n1~{}까지만 있지만...\n1번으로 이동시킬게욧...!\n다음에는 이러지 말아요..!", choice.len()-1);
-                    thread::sleep(time::Duration::from_millis(1500));
-                    terminal_clear();
-                    choice_number = 1;
-                } else {
-                    choice_number = d[i+2*number-1].value[0].parse::<usize>().unwrap_or(1);
-                }
-                player = number;
+                choice_number = d[i+number-1].value[0].parse::<usize>().unwrap_or(1);
+                player = choice_number;
                 //println!("You> {}", choice[number]);
                 thread::sleep(time::Duration::from_millis(2000));
                 terminal_clear();
             }, 
             a => {
-                if pop.keyword == "PLAYER" || pop.keyword == "가라" && player.to_string() == pop.value[0] {
+                if pop.keyword == "GOTO" || pop.keyword == "가라" && player.to_string() == pop.value[0] {
                     d.clear();
                     if d.is_empty() {
                         let f = find_branch(find_line(tokens.iter(), choice_number), tokens.iter(), choice_number);
@@ -154,7 +140,7 @@ loop {
                         }
                     }
                 }
-                if a == "BRANCH" || a == "GOTO" || a == "PLAYER" || a == "플레이어" || a == "가라" || a == "가지" {
+                if a == "BRANCH" || a == "GOTO" || a == "가라" || a == "가지" {
                     continue; 
                 } else {
                     println!("{}: {}", pop.keyword, pop.value[0]);
