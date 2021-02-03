@@ -1,3 +1,5 @@
+use std::process::Command;
+
 // 1, 2, 3 ...
 // 'laks': 'Do you like me?'
 // choice: "1 ('Yes')" | "2 ('No')" | "3 ('Kill Laks')"  | "4 ('Do nothing')"
@@ -46,4 +48,17 @@ pub fn find_line(tokens: std::slice::Iter<'_, Token>, choice: usize) -> usize {
         }
     }
     return line;
+}
+
+pub fn terminal_clear() {
+    if cfg!(target_os = "linux") { 
+        print!("\x1B[2J\x1B[1;1H");
+    } else if cfg!(target_os = "windows") {
+        Command::new("cmd")
+        .args(&["/c", "cls"])
+        .spawn()
+        .expect("cls command failed to start")
+        .wait()
+        .expect("failed to wait");
+    }
 }
