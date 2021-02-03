@@ -167,7 +167,7 @@ SOFTWARE.
                         terminal_clear();
                         number = 1;
                     }
-                    choice_number = d[i + number - 1].value[0].parse::<usize>().unwrap_or(1);
+                    choice_number = d[i + number].value[0].parse::<usize>().unwrap_or(1);
                     player = choice_number;
                     //println!("You> {}", choice[number]);
                     thread::sleep(time::Duration::from_millis(2000));
