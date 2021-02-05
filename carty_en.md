@@ -25,7 +25,7 @@ BRANCH: 1
 ##### `CHOICE: [message 1] | [message 2] | ....` is to let user select a message.
 If there's no `GOTO: [number]` for `CHOICE` result then it'll go to branch 1.
 ```
-CHOICE: 좋아 | 싫어
+CHOICE: Like it | Don't like it
 GOTO: 2
 GOTO: 1
 ```
